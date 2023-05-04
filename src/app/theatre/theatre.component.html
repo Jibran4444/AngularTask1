@@ -1,0 +1,55 @@
+<div class="container">
+    <h1>Bingo Movie Theatre</h1>
+    <div class="row mb-3">
+        <ng-container *ngIf="jsonData">
+            <ng-container *ngFor="let item of rowArr;let i = index;">
+                <div class="d-flex justify-content-start">
+                    <ng-container *ngFor="let it of counter(item.Start, item.End); let j = index">
+                        <ng-container *ngIf="!item.AlreadyBooked.includes(it) && it != -1; else disableBtn">
+                                <ng-container *ngIf="!alreadyBookedSeats.includes(it);else btnFill">
+                                    <button (click)="bookSeat(it,item.row)" class="btn rounded-0 btn-light border-dark btn-lg w-100">{{it}}</button>
+                                </ng-container>
+                                <ng-template #btnFill>
+                                    <button (click)="unBookSeat(it,item.row)" class="btn rounded-0 btn-success border-dark btn-lg w-100">{{it}}</button>
+                                </ng-template>
+                        </ng-container>
+                        <ng-template #disableBtn>
+                            <ng-container *ngIf="it != -1; else btnNull">
+                                <button class="btn rounded-0 btn-secondary border-dark btn-lg w-100" [disabled]="true">{{it}}</button>
+                            </ng-container>
+                            <ng-template #btnNull>
+                                <button class="btn rounded-0 btn-light border-dark btn-lg w-100" [disabled]="true"></button>
+                            </ng-template>
+                        </ng-template>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h3>Booking Details</h3>
+                </div>
+                <div class="card-body fs-5">
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold">Movie Name </span> <span> {{MovieName}}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold">No Of Booked Seats </span> <span> {{alreadyBookedSeats.length}}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold">Total Amount </span> <span> {{total}}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold">Tax </span> <span>{{total | calcTax}} </span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="fw-bold">Total Payable Amount </span> <span> {{total | calcTotal}} </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
